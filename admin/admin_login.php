@@ -5,8 +5,9 @@ if(empty($_POST['username']) || empty($_POST['password'])){
 }else{
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $ip = $_SERVER['REMOTE_ADDR'];
 
-    $message = login($username, $password);
+    $message = login($username, $password, $ip);
 }
 
 ?>

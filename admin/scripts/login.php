@@ -1,6 +1,6 @@
 <?php 
 
-function login($username, $password){
+function login($username, $password, $ip){
 require_once('connect.php');
 $check_exist_query = 'SELECT COUNT(*) FROM tbl_user';
 $check_exist_query .= ' WHERE user_name = :username';
@@ -34,7 +34,24 @@ $user_set->execute(
       $_SESSION['user_id'] = $id;
       $_SESSION['user_name'] = $found_user['user_name'];
 
+      //update our ip
+
+      //TODO: use the right SQL query to update the
+      // user_ip column to $ip within tbl_user table
+      //Don't forget binging it
+      
+      $update_ip_query = 'UPDATE tbl_user SET user_ip=:ip WHERE user_id=;id';
+      $update_ip_set = $pdo->prepare($update_ip_query);
+      $update_ip_set->execute(
+        array(
+          ':ip'=>$ip,
+          ':id'=>$id
+        )
+      );
+
     }
+
+
     if(empty($id)){
       $message = 'Wrong Password!';
       return $message;
